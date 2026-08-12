@@ -1,0 +1,16 @@
+{
+  "name": "iet-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IET workshop development environment",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/server.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
