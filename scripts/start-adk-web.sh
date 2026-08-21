@@ -15,12 +15,15 @@ if [[ ! -f "${HOME}/.adk/config.json" ]]; then
   printf '{\n  "telemetry": false\n}\n' > "${HOME}/.adk/config.json"
 fi
 
-if [[ -x "$ROOT/.venv/bin/adk" ]]; then
+VENV="${ADK_VENV:-$HOME/.venvs/adk}"
+if [[ -x "$VENV/bin/adk" ]]; then
+  ADK="$VENV/bin/adk"
+elif [[ -x "$ROOT/.venv/bin/adk" ]]; then
   ADK="$ROOT/.venv/bin/adk"
 elif command -v adk >/dev/null 2>&1; then
   ADK="$(command -v adk)"
 else
-  echo "google-adk is not installed. Run: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
+  echo "google-adk is not installed. Run: ./scripts/install-adk.sh" >&2
   exit 1
 fi
 

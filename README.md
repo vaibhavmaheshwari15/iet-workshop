@@ -5,12 +5,12 @@ Google Agent Development Kit (ADK) workshop environment.
 ## Setup
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+./scripts/install-adk.sh
 cp my_agent/.env.example my_agent/.env
 # Put a Gemini API key in my_agent/.env
 ```
+
+The virtualenv is created at `~/.venvs/adk` (not under `/workspace`) so Cloud Agent git checkout cannot delete it.
 
 ## Run the Dev UI
 

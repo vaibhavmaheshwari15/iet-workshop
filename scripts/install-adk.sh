@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Idempotent Cloud Agent / local bootstrap for Google ADK.
+# The venv lives outside /workspace so git checkout cleanup cannot delete it.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -10,9 +11,14 @@ if ! python3 -c 'import venv, ensurepip' 2>/dev/null; then
   sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3.12-venv python3-pip
 fi
 
-python3 -m venv .venv
-.venv/bin/pip install -U pip
-.venv/bin/pip install -r requirements.txt
+VENV="${ADK_VENV:-$HOME/.venvs/adk}"
+python3 -m venv "$VENV"
+"$VENV/bin/pip" install -U pip
+if [[ -f "$ROOT/requirements.txt" ]]; then
+  "$VENV/bin/pip" install -r "$ROOT/requirements.txt"
+else
+  "$VENV/bin/pip" install 'google-adk>=1.2.0'
+fi
 
 mkdir -p "${HOME}/.adk"
 python3 - <<'PY'
