@@ -1,0 +1,11 @@
+{
+  "name": "iet-workshop",
+  "install": "./scripts/cloud-agent-install.sh",
+  "terminals": [
+    {
+      "name": "api",
+      "command": "npm start"
+    }
+  ],
+  "ports": [3000]
+}
